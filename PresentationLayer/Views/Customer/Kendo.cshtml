@@ -1,0 +1,104 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+<head>
+    <link rel="stylesheet" href="https://kendo.cdn.telerik.com/themes/6.7.0/default/default-ocean-blue.css" />
+
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://kendo.cdn.telerik.com/2023.2.829/js/kendo.all.min.js"></script>
+
+
+
+   @*  <link href="https://kendo.cdn.telerik.com/themes/7.0.2/default/default-main.css" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
+    <script src="https://kendo.cdn.telerik.com/2023.3.1114/js/kendo.all.min.js"></script>
+ *@
+</head>
+
+
+<body>
+
+    <h1 style="position:center"><strong>Customer Details Using Kendo</strong></h1>
+    <div id="Grid" ></div>
+  
+
+    <script>
+        $("#Grid").kendoGrid({
+            dataSource: {
+                //data:"emp",
+                transport: {
+                    read: {
+                        url: "/Customer/GetData",
+                        dataType: "json"
+                    },
+                    create: {
+                        url: "/Customer/CreateData",
+                        dataType: "json",
+                        type: "POST",
+                        complete: function (data) {
+                            console.log(data);
+                            alert("Successfull");
+                        }
+                    },
+                    destroy: {
+                        url: "/Customer/DeleteData",
+                        dataType: "json",
+                        type:"POST"
+                    },
+                    update: {
+                        url: "/Customer/UpdateData",
+                        dataType: "json",
+                        type:"POST"
+                       
+                    }
+                },
+                pageSize: 5,
+                schema: {
+                    model: {
+                        id:"id",
+                        field: {
+                             Id : {editable: false},
+                            Name: {editable: true, type:"string"},
+                            Age: {editable: true, type: "number"},
+                            City: {editable: true, type: "string"}
+                        }
+                    }
+                }
+
+            }, 
+            columns: [
+                //{ field: "id", title: "ID", width: "150px" },
+                { field: "name", title: "Name", width: "200px" },
+                { field: "age", title: "Age", width: "100px" },
+                { field: "city", title: "Address", width: "100px" },
+                {
+                    command: ["edit", "destroy"],
+                    width: "180px"
+                }
+            ],
+
+            height: 350,
+            // editable: true,
+             editable: "popup",
+            //editable: "inline",
+            toolbar: ["save", "Create"],
+            sortable: true,
+            filterable: true,
+            pageable: {
+                refresh: true,
+                pageSizes: true,
+            }               
+        });
+    </script> 
+
+</body>
